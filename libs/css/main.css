@@ -113,7 +113,7 @@ body{
     letter-spacing: 1px;
     display: inline-block;
     width: 250px;
-    background-color: #db3434;
+    background-color: #24b134;
 }.header-date{
   color: #9b9b9b;
   margin-left: 20px;
@@ -173,12 +173,13 @@ body{
   padding: 65px 0 0;
   height: 100%;
   width: 250px;
-  background: #272727;
+  background: #1d902b;
   border-right: 1px solid #ddd;
   text-align: center;
 }.sidebar ul li:hover,.submenu ul li:hover{
   -webkit-transition: all .2s ease-in-out;
   transition: all .2s ease-in-out;
+  
 }.sidebar ul{
   list-style: none;
   margin: 0;
@@ -187,10 +188,14 @@ body{
   display: block;
 }.sidebar ul li:hover,ul.submenu{
   background-color:#35404d;
-}.sidebar ul li a:hover {
+}
+ul.submenu {
+  background-color: #1d902b;
+}
+.sidebar ul li a:hover {
   color: white;
 }.sidebar ul li a,ul.submenu li a {
-  color: #aeb2b7;
+  color: white;
   display: block;
   overflow: hidden;
   position: relative;
@@ -203,7 +208,7 @@ body{
   letter-spacing: 1.5px;
   text-shadow: 0 1px rgba(0,0,0, 1);
 }.sidebar ul li a i{
-  color: #aeb2b7;
+  color: #eff2f6;
   padding: 15px 22px;
   text-align: center;
 }ul.submenu{
