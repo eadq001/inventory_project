@@ -28,7 +28,7 @@ $results = '';
 <html lang="en-US">
  <head>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-   <title>Default Page Title</title>
+   <title>Sales Report</title>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
    <style>
    @media print {
@@ -79,7 +79,7 @@ $results = '';
   <?php if($results): ?>
     <div class="page-break">
        <div class="sale-head">
-           <h1>Inventory Management System - Sales Report</h1>
+           <h1>Merchandise Inventory System - Sales Report</h1>
            <strong><?php if(isset($start_date)){ echo $start_date;}?> TILL DATE <?php if(isset($end_date)){echo $end_date;}?> </strong>
        </div>
       <table class="table table-border">
