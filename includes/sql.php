@@ -288,7 +288,7 @@ function tableExists($table){
  /*--------------------------------------------------------------*/
  function find_all_sale(){
    global $db;
-   $sql  = "SELECT s.id,s.category,s.sizes, s.qty,s.price,s.date,s.remarks,p.name";
+   $sql  = "SELECT s.id,s.category,s.sizes, s.qty,s.price,s.date,s.p.name";
    $sql .= " FROM sales s";
    $sql .= " LEFT JOIN products p ON s.product_id = p.id";
    $sql .= " ORDER BY s.date DESC";
@@ -329,13 +329,12 @@ function find_sale_by_dates($start_date,$end_date){
 /*--------------------------------------------------------------*/
 function  dailySales($year,$month){
   global $db;
-  $sql  = "SELECT s.qty,";
-  $sql .= " DATE_FORMAT(s.date, '%Y-%m-%e') AS date,p.name,";
-  $sql .= "SUM(p.sale_price * s.qty) AS total_saleing_price";
-  $sql .= " FROM sales s";
-  $sql .= " LEFT JOIN products p ON s.product_id = p.id";
-  $sql .= " WHERE DATE_FORMAT(s.date, '%Y-%m' ) = '{$year}-{$month}'";
-  $sql .= " GROUP BY DATE_FORMAT( s.date,  '%e' ),s.product_id";
+  $sql  = "SELECT s.id, s.qty, s.category, s.sizes, s.remarks, DATE_FORMAT(s.date, '%Y-%m-%e') AS date, p.name, SUM(p.sale_price * s.qty) AS total_saleing_price ";
+  $sql .= "FROM sales s ";
+  $sql .= "LEFT JOIN products p ON s.product_id = p.id ";
+  $sql .= "WHERE DATE_FORMAT(s.date, '%Y-%m' ) = '{$year}-{$month}' ";
+  $sql .= "GROUP BY s.id ";
+  $sql .= "ORDER BY s.date DESC";
   return find_by_sql($sql);
 }
 /*--------------------------------------------------------------*/
