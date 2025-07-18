@@ -56,9 +56,31 @@ $sales = find_all_sale();
                      <a href="edit_sale.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-warning btn-xs"  title="Edit" data-toggle="tooltip">
                        <span class="glyphicon glyphicon-edit"></span>
                      </a>
-                     <a href="delete_sale.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-trash"></span>
-                     </a>
+                     
+                    <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#deleteModal<?php echo (int)$sale['id']; ?>">
+                      <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+
+                    <!-- Delete Confirmation Modal -->
+                    <div class="modal fade" id="deleteModal<?php echo (int)$sale['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel<?php echo (int)$sale['id']; ?>" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title" id="deleteModalLabel<?php echo (int)$sale['id']; ?>">Confirm Deletion</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            Are you sure you want to delete this sale?
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <a href="delete_sale.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-danger">Delete</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                </td>
              </tr>

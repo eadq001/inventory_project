@@ -52,4 +52,11 @@
         <li><a href="daily_sales.php">Daily sales</a> </li>
       </ul>
   </li>
+  <li>
+    <a href="inventory_report.php" >
+      <i class="glyphicon glyphicon-indent-right"></i>
+      <span>Inventory Report</span>
+    </a>
+  </li>
+    
 </ul>

@@ -43,7 +43,7 @@
         </div>
         <div class="panel-value pull-right">
           <h2 class="margin-top"> <?php  echo $c_categorie['total']; ?> </h2>
-          <p class="text-muted">Categories</p>
+          <p class="text-muted">Type of Merch</p>
         </div>
        </div>
     </div>
@@ -91,7 +91,7 @@
          <table class="table table-striped table-bordered table-condensed">
           <thead>
            <tr>
-             <th>Title</th>
+             <th>Item Description</th>
              <th>Total Sold</th>
              <th>Total Quantity</th>
            <tr>
@@ -122,7 +122,7 @@
        <thead>
          <tr>
            <th class="text-center" style="width: 50px;">#</th>
-           <th>Product Name</th>
+           <th>Item Description</th>
            <th>Date</th>
            <th>Total Sale</th>
          </tr>
