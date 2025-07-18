@@ -36,6 +36,7 @@ $sales = find_all_sale();
                 <th class="text-center" style="width: 15%;"> Quantity</th>
                 <th class="text-center" style="width: 15%;"> Total </th>
                 <th class="text-center" style="width: 15%;"> Date </th>
+                <th class="text-center" style="width: 15%;"> Remarks </th>
                 <th class="text-center" style="width: 100px;"> Actions </th>
              </tr>
             </thead>
@@ -49,31 +50,15 @@ $sales = find_all_sale();
                <td class="text-center"><?php echo (int)$sale['qty']; ?></td>
                <td class="text-center"><?php echo remove_junk($sale['price']); ?></td>
                <td class="text-center"><?php echo $sale['date']; ?></td>
+               <td class="text-center"><?php echo $sale['remarks']; ?></td>
                <td class="text-center">
                   <div class="btn-group">
                      <a href="edit_sale.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-warning btn-xs"  title="Edit" data-toggle="tooltip">
                        <span class="glyphicon glyphicon-edit"></span>
                      </a>
-                      <!-- Delete Confirmation Modal -->
-                    <div class="modal fade" id="deleteModal<?php echo (int)$product['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel<?php echo (int)$product['id']; ?>" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                        <h4 class="modal-title" id="deleteModalLabel<?php echo (int)$sale['id']; ?>">Confirm Delete</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                        </div>
-                        <div class="modal-body">
-                        Are you sure you want to delete <strong><?php echo remove_junk($product['name']); ?></strong>?
-                        </div>
-                        <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <a href="delete_sale.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-danger">Delete</a>
-                        </div>
-                      </div>
-                      </div>
-                    </div>
+                     <a href="delete_sale.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
+                       <span class="glyphicon glyphicon-trash"></span>
+                     </a>
                   </div>
                </td>
              </tr>

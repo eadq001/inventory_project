@@ -7,7 +7,7 @@
 <?php
 
   if(isset($_POST['add_sale'])){
-    $req_fields = array('s_id','category','sizes','quantity','price','total', 'date' );
+    $req_fields = array('s_id','category','sizes','quantity','price','total', 'date', 'remarks' );
     validate_fields($req_fields);
         if(empty($errors)){
           $p_id      = $db->escape((int)$_POST['s_id']);
@@ -16,12 +16,13 @@
           $s_sizes  = $db->escape($_POST['sizes']);
           $s_total   = $db->escape($_POST['total']);
           $date      = $db->escape($_POST['date']);
+          $s_remarks      = $db->escape($_POST['remarks']);
           $s_date    = make_date();
 
           $sql  = "INSERT INTO sales (";
-          $sql .= " product_id,category,sizes,qty,price,date";
+          $sql .= " product_id,category,sizes,qty,price,date,remarks";
           $sql .= ") VALUES (";
-          $sql .= "'{$p_id}','{$s_categorie}','{$s_sizes}','{$s_qty}','{$s_total}','{$s_date}'";
+          $sql .= "'{$p_id}','{$s_categorie}','{$s_sizes}','{$s_qty}','{$s_total}','{$s_date}','{$s_remarks}' ";
           $sql .= ")";
 
                 if($db->query($sql)){
@@ -77,6 +78,7 @@
             <th> Qty </th>
             <th> Total </th>
             <th> Date</th>
+            <th> Remarks</th>
             <th> Action</th>
            </thead>
              <tbody  id="product_info">

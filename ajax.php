@@ -61,6 +61,17 @@ if (isset($_POST['p_name']) && strlen($_POST['p_name'])) {
       $html .= '<td>';
       $html .= '<input type="date" class="form-control datePicker" name="date" data-date data-date-format="yyyy-mm-dd">';
       $html .= '</td>';
+        // Fetch remarks value by ID
+      $remarks_value = '';
+      if (!empty($result['categorie_id'])) {
+        $remarks = find_by_id('products', $result['id']);
+        if ($remarks) {
+          $remarks_value = $remarks['remarks'];
+        }
+      }
+       $html .= '<td>';
+      $html .= "<input type=\"text\" class=\"form-control\" name=\"remarks\" value=\"{$remarks_value}\"readonly>";
+      $html .= '</td>';
       $html .= '<td>';
       $html .= '<button type="submit" name="add_sale" class="btn btn-primary">Add sale</button>';
       $html .= '</td>';
