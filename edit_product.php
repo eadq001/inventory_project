@@ -24,11 +24,6 @@ if(!$product){
        $p_qty   = remove_junk($db->escape($_POST['product-quantity']));
        $p_buy   = remove_junk($db->escape($_POST['buying-price']));
        $p_sale  = remove_junk($db->escape($_POST['saleing-price']));
-       if (is_null($_POST['product-photo']) || $_POST['product-photo'] === "") {
-         $media_id = '0';
-       } else {
-         $media_id = remove_junk($db->escape($_POST['product-photo']));
-       }
        $query   = "UPDATE products SET";
        $query  .=" name ='{$p_name}', quantity ='{$p_qty}',";
        $query  .=" buy_price ='{$p_buy}', sale_price ='{$p_sale}', categorie_id ='{$p_cat}',media_id='{$media_id}'";
@@ -116,7 +111,7 @@ if(!$product){
                     <label for="qty">Buying price</label>
                     <div class="input-group">
                       <span class="input-group-addon">
-                        <i class="glyphicon glyphicon-usd"></i>
+                        &#8369;
                       </span>
                       <input type="number" class="form-control" name="buying-price" value="<?php echo remove_junk($product['buy_price']);?>">
                       <span class="input-group-addon">.00</span>
@@ -128,7 +123,7 @@ if(!$product){
                      <label for="qty">Selling price</label>
                      <div class="input-group">
                        <span class="input-group-addon">
-                         <i class="glyphicon glyphicon-usd"></i>
+                         &#8369;
                        </span>
                        <input type="number" class="form-control" name="saleing-price" value="<?php echo remove_junk($product['sale_price']);?>">
                        <span class="input-group-addon">.00</span>

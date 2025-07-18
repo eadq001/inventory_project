@@ -22,12 +22,13 @@
             <thead>
               <tr>
                 <th class="text-center" style="width: 50px;">#</th>
-                <th> Product Title </th>
+                <th> Item Description </th>
                 <th class="text-center" style="width: 10%;"> Categories </th>
                 <th class="text-center" style="width: 10%;"> In-Stock </th>
                 <th class="text-center" style="width: 10%;"> Buying Price </th>
                 <th class="text-center" style="width: 10%;"> Selling Price </th>
                 <th class="text-center" style="width: 10%;"> Product Added </th>
+                <th class="text-center" style="width: 10%;"> Remarks </th>
                 <th class="text-center" style="width: 100px;"> Actions </th>
               </tr>
             </thead>
@@ -42,14 +43,36 @@
                 <td class="text-center"> <?php echo remove_junk($product['buy_price']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['sale_price']); ?></td>
                 <td class="text-center"> <?php echo read_date($product['date']); ?></td>
+                <td class="text-center"> <?php echo remove_junk($product['remarks']); ?></td>
                 <td class="text-center">
                   <div class="btn-group">
                     <a href="edit_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-info btn-xs"  title="Edit" data-toggle="tooltip">
                       <span class="glyphicon glyphicon-edit"></span>
                     </a>
-                    <a href="delete_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
+                    <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#deleteModal<?php echo (int)$product['id']; ?>">
                       <span class="glyphicon glyphicon-trash"></span>
-                    </a>
+                    </button>
+
+                    <!-- Delete Confirmation Modal -->
+                    <div class="modal fade" id="deleteModal<?php echo (int)$product['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel<?php echo (int)$product['id']; ?>" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                        <h4 class="modal-title" id="deleteModalLabel<?php echo (int)$product['id']; ?>">Confirm Delete</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                        Are you sure you want to delete <strong><?php echo remove_junk($product['name']); ?></strong>?
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <a href="delete_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-danger">Delete</a>
+                        </div>
+                      </div>
+                      </div>
+                    </div>
                   </div>
                 </td>
               </tr>

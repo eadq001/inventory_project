@@ -8,24 +8,20 @@
 ?>
 <?php
  if(isset($_POST['add_product'])){
-   $req_fields = array('product-title','product-categorie','product-quantity','buying-price', 'saleing-price' );
+   $req_fields = array('product-title','product-categorie','remarks', 'product-quantity','buying-price', 'selling-price' );
    validate_fields($req_fields);
    if(empty($errors)){
      $p_name  = remove_junk($db->escape($_POST['product-title']));
      $p_cat   = remove_junk($db->escape($_POST['product-categorie']));
      $p_qty   = remove_junk($db->escape($_POST['product-quantity']));
      $p_buy   = remove_junk($db->escape($_POST['buying-price']));
-     $p_sale  = remove_junk($db->escape($_POST['saleing-price']));
-     if (is_null($_POST['product-photo']) || $_POST['product-photo'] === "") {
-       $media_id = '0';
-     } else {
-       $media_id = remove_junk($db->escape($_POST['product-photo']));
-     }
+     $p_sale  = remove_junk($db->escape($_POST['selling-price']));
+     $p_remarks  = remove_junk($db->escape($_POST['remarks']));
      $date    = make_date();
      $query  = "INSERT INTO products (";
-     $query .=" name,quantity,buy_price,sale_price,categorie_id,media_id,date";
+     $query .=" name,quantity,buy_price,sale_price,categorie_id,remarks,date";
      $query .=") VALUES (";
-     $query .=" '{$p_name}', '{$p_qty}', '{$p_buy}', '{$p_sale}', '{$p_cat}', '{$media_id}', '{$date}'";
+     $query .=" '{$p_name}', '{$p_qty}', '{$p_buy}', '{$p_sale}', '{$p_cat}', '{$p_remarks}', '{$date}'";
      $query .=")";
      $query .=" ON DUPLICATE KEY UPDATE name='{$p_name}'";
      if($db->query($query)){
@@ -67,29 +63,27 @@
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
-                  <input type="text" class="form-control" name="product-title" placeholder="Product Title">
+                  <input type="text" class="form-control" name="product-title" placeholder="Item Description">
                </div>
               </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-6">
                     <select class="form-control" name="product-categorie">
-                      <option value="">Select Product Category</option>
+                      <option value="">Select Type of Merchandise</option>
                     <?php  foreach ($all_categories as $cat): ?>
                       <option value="<?php echo (int)$cat['id'] ?>">
                         <?php echo $cat['name'] ?></option>
                     <?php endforeach; ?>
                     </select>
                   </div>
-                  <!-- <div class="col-md-6">
-                    <select class="form-control" name="product-photo">
-                      <option value="">Select Product Photo</option>
-                    <?php  foreach ($all_photo as $photo): ?>
-                      <option value="<?php echo (int)$photo['id'] ?>">
-                        <?php echo $photo['file_name'] ?></option>
-                    <?php endforeach; ?>
-                    </select>
-                  </div> -->
+                <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                   <i class="glyphicon glyphicon-th-large"></i>
+                  </span>
+                  <input type="text" class="form-control" name="remarks" placeholder="Remarks">
+               </div>
                 </div>
               </div>
 
@@ -117,7 +111,7 @@
                       <span class="input-group-addon">
                         &#8369;
                       </span>
-                      <input type="number" class="form-control" name="saleing-price" placeholder="Selling Price">
+                      <input type="number" class="form-control" name="selling-price" placeholder="Selling Price">
                       <span class="input-group-addon">.00</span>
                    </div>
                   </div>
