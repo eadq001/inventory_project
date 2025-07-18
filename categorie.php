@@ -1,5 +1,5 @@
 <?php
-  $page_title = 'All categories';
+  $page_title = 'Type of Merchs';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
   page_require_level(1);
@@ -15,7 +15,7 @@
       $sql  = "INSERT INTO categories (name)";
       $sql .= " VALUES ('{$cat_name}')";
       if($db->query($sql)){
-        $session->msg("s", "Successfully Added New Category");
+        $session->msg("s", "Successfully Added New Type of Merch");
         redirect('categorie.php',false);
       } else {
         $session->msg("d", "Sorry Failed to insert.");
@@ -40,15 +40,15 @@
         <div class="panel-heading">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>Add New Category</span>
+            <span>Add New Type of Merch</span>
          </strong>
         </div>
         <div class="panel-body">
           <form method="post" action="categorie.php">
             <div class="form-group">
-                <input type="text" class="form-control" name="categorie-name" placeholder="Category Name">
+                <input type="text" class="form-control" name="categorie-name" placeholder="Type of Merch Name">
             </div>
-            <button type="submit" name="add_cat" class="btn btn-primary">Add Category</button>
+            <button type="submit" name="add_cat" class="btn btn-primary">Add Type of Merch</button>
         </form>
         </div>
       </div>
@@ -58,7 +58,7 @@
       <div class="panel-heading">
         <strong>
           <span class="glyphicon glyphicon-th"></span>
-          <span>All Categories</span>
+          <span>All Types of Merch</span>
        </strong>
       </div>
         <div class="panel-body">
@@ -66,7 +66,7 @@
             <thead>
                 <tr>
                     <th class="text-center" style="width: 50px;">#</th>
-                    <th>Categories</th>
+                    <th>Type of Merch</th>
                     <th class="text-center" style="width: 100px;">Actions</th>
                 </tr>
             </thead>

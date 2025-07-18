@@ -15,7 +15,7 @@ if(!$product){
 ?>
 <?php
  if(isset($_POST['product'])){
-    $req_fields = array('product-title','product-categorie','product-quantity','buying-price', 'saleing-price' );
+    $req_fields = array('product-title','product-categorie','product-quantity','buying-price', 'selling-price' );
     validate_fields($req_fields);
 
    if(empty($errors)){
@@ -23,10 +23,11 @@ if(!$product){
        $p_cat   = (int)$_POST['product-categorie'];
        $p_qty   = remove_junk($db->escape($_POST['product-quantity']));
        $p_buy   = remove_junk($db->escape($_POST['buying-price']));
-       $p_sale  = remove_junk($db->escape($_POST['saleing-price']));
+       $p_sale  = remove_junk($db->escape($_POST['selling-price']));
+       $p_remarks  = remove_junk($db->escape($_POST['remarks']));
        $query   = "UPDATE products SET";
        $query  .=" name ='{$p_name}', quantity ='{$p_qty}',";
-       $query  .=" buy_price ='{$p_buy}', sale_price ='{$p_sale}', categorie_id ='{$p_cat}',media_id='{$media_id}'";
+       $query  .=" buy_price ='{$p_buy}', sale_price ='{$p_sale}', categorie_id ='{$p_cat}',remarks='{$p_remarks}'";
        $query  .=" WHERE id ='{$product['id']}'";
        $result = $db->query($query);
                if($result && $db->affected_rows() === 1){
@@ -56,7 +57,7 @@ if(!$product){
         <div class="panel-heading">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>Add New Product</span>
+            <span>Edit Product</span>
          </strong>
         </div>
         <div class="panel-body">
@@ -81,18 +82,23 @@ if(!$product){
                    <?php endforeach; ?>
                  </select>
                   </div>
-                  <div class="col-md-6">
-                    <select class="form-control" name="product-photo">
-                      <option value=""> No image</option>
-                      <?php  foreach ($all_photo as $photo): ?>
-                        <option value="<?php echo (int)$photo['id'];?>" <?php if($product['media_id'] === $photo['id']): echo "selected"; endif; ?> >
-                          <?php echo $photo['file_name'] ?></option>
-                      <?php endforeach; ?>
-                    </select>
-                  </div>
-                </div>
+                    <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                   <i class="glyphicon glyphicon-th-large"></i>
+                  </span>
+                  <input type="text" class="form-control" name="remarks" placeholder="Remarks" value="<?php echo remove_junk($product['remarks']); ?>">
+               </div>
               </div>
-
+            </div>
+            <div class="input-group">
+              <span class="input-group-addon">
+               <i class="glyphicon glyphicon-th-large"></i>
+              </span>
+              <input type="text" class="form-control" name="sizes" placeholder="Sizes" value="<?php echo remove_junk($product['sizes']); ?>" style="width: 44.5%;">
+           </div>
+              </div>
+              
               <div class="form-group">
                <div class="row">
                  <div class="col-md-4">
@@ -125,7 +131,7 @@ if(!$product){
                        <span class="input-group-addon">
                          &#8369;
                        </span>
-                       <input type="number" class="form-control" name="saleing-price" value="<?php echo remove_junk($product['sale_price']);?>">
+                       <input type="number" class="form-control" name="selling-price" value="<?php echo remove_junk($product['sale_price']);?>">
                        <span class="input-group-addon">.00</span>
                     </div>
                    </div>

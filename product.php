@@ -23,8 +23,9 @@
               <tr>
                 <th class="text-center" style="width: 50px;">#</th>
                 <th> Item Description </th>
-                <th class="text-center" style="width: 10%;"> Categories </th>
-                <th class="text-center" style="width: 10%;"> In-Stock </th>
+                <th class="text-center" style="width: 10%;"> Type of Merch </th>
+                <th class="text-center" style="width: 10%;"> Sizes </th>
+                <th class="text-center" style="width: 10%;"> Quantity </th>
                 <th class="text-center" style="width: 10%;"> Buying Price </th>
                 <th class="text-center" style="width: 10%;"> Selling Price </th>
                 <th class="text-center" style="width: 10%;"> Product Added </th>
@@ -39,6 +40,7 @@
                 
                 <td> <?php echo remove_junk($product['name']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['categorie']); ?></td>
+                <td class="text-center"> <?php echo remove_junk($product['sizes']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['quantity']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['buy_price']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['sale_price']); ?></td>

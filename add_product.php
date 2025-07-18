@@ -1,46 +1,45 @@
 <?php
-  $page_title = 'Add Product';
-  require_once('includes/load.php');
-  // Checkin What level user has permission to view this page
-  page_require_level(2);
-  $all_categories = find_all('categories');
-  $all_photo = find_all('media');
+$page_title = 'Add Product';
+require_once ('includes/load.php');
+// Checkin What level user has permission to view this page
+page_require_level(2);
+$all_categories = find_all('categories');
+$all_photo = find_all('media');
 ?>
 <?php
- if(isset($_POST['add_product'])){
-   $req_fields = array('product-title','product-categorie','remarks', 'product-quantity','buying-price', 'selling-price' );
-   validate_fields($req_fields);
-   if(empty($errors)){
-     $p_name  = remove_junk($db->escape($_POST['product-title']));
-     $p_cat   = remove_junk($db->escape($_POST['product-categorie']));
-     $p_qty   = remove_junk($db->escape($_POST['product-quantity']));
-     $p_buy   = remove_junk($db->escape($_POST['buying-price']));
-     $p_sale  = remove_junk($db->escape($_POST['selling-price']));
-     $p_remarks  = remove_junk($db->escape($_POST['remarks']));
-     $date    = make_date();
-     $query  = "INSERT INTO products (";
-     $query .=" name,quantity,buy_price,sale_price,categorie_id,remarks,date";
-     $query .=") VALUES (";
-     $query .=" '{$p_name}', '{$p_qty}', '{$p_buy}', '{$p_sale}', '{$p_cat}', '{$p_remarks}', '{$date}'";
-     $query .=")";
-     $query .=" ON DUPLICATE KEY UPDATE name='{$p_name}'";
-     if($db->query($query)){
-       $session->msg('s',"Product added ");
-       redirect('add_product.php', false);
-     } else {
-       $session->msg('d',' Sorry failed to added!');
-       redirect('product.php', false);
-     }
-
-   } else{
-     $session->msg("d", $errors);
-     redirect('add_product.php',false);
-   }
-
- }
+if (isset($_POST['add_product'])) {
+  $req_fields = array('product-title', 'product-categorie', 'remarks','sizes', 'product-quantity', 'buying-price', 'selling-price');
+  validate_fields($req_fields);
+  if (empty($errors)) {
+    $p_name = remove_junk($db->escape($_POST['product-title']));
+    $p_cat = remove_junk($db->escape($_POST['product-categorie']));
+    $p_qty = remove_junk($db->escape($_POST['product-quantity']));
+    $p_buy = remove_junk($db->escape($_POST['buying-price']));
+    $p_sale = remove_junk($db->escape($_POST['selling-price']));
+    $p_remarks = remove_junk($db->escape($_POST['remarks']));
+    $p_sizes = remove_junk($db->escape($_POST['sizes']));
+    $date = make_date();
+    $query = 'INSERT INTO products (';
+    $query .= ' name,quantity,buy_price,sale_price,categorie_id,remarks,sizes, date';
+    $query .= ') VALUES (';
+    $query .= " '{$p_name}', '{$p_qty}', '{$p_buy}', '{$p_sale}', '{$p_cat}', '{$p_remarks}','{$p_sizes}', '{$date}'";
+    $query .= ')';
+    $query .= " ON DUPLICATE KEY UPDATE name='{$p_name}'";
+    if ($db->query($query)) {
+      $session->msg('s', 'Product added ');
+      redirect('add_product.php', false);
+    } else {
+      $session->msg('d', ' Sorry failed to added!');
+      redirect('product.php', false);
+    }
+  } else {
+    $session->msg('d', $errors);
+    redirect('add_product.php', false);
+  }
+}
 
 ?>
-<?php include_once('layouts/header.php'); ?>
+<?php include_once ('layouts/header.php'); ?>
 <div class="row">
   <div class="col-md-12">
     <?php echo display_msg($msg); ?>
@@ -65,18 +64,27 @@
                   </span>
                   <input type="text" class="form-control" name="product-title" placeholder="Item Description">
                </div>
+                
               </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-6">
                     <select class="form-control" name="product-categorie">
                       <option value="">Select Type of Merchandise</option>
-                    <?php  foreach ($all_categories as $cat): ?>
-                      <option value="<?php echo (int)$cat['id'] ?>">
-                        <?php echo $cat['name'] ?></option>
-                    <?php endforeach; ?>
-                    </select>
-                  </div>
+                      <?php foreach ($all_categories as $cat): ?>
+                        <option value="<?php echo (int) $cat['id'] ?>">
+                          <?php echo $cat['name'] ?></option>
+                          <?php endforeach; ?>
+                        </select>
+                        <div class="form-group" style="margin-top:15px;">
+                          <div class="input-group">
+                            <span class="input-group-addon">
+                             <i class="glyphicon glyphicon-th-large"></i>
+                            </span>
+                            <input type="text" class="form-control" name="sizes" placeholder="Sizes">
+                         </div>
+                        </div>
+                      </div>
                 <div class="form-group">
                 <div class="input-group">
                   <span class="input-group-addon">
@@ -85,6 +93,7 @@
                   <input type="text" class="form-control" name="remarks" placeholder="Remarks">
                </div>
                 </div>
+              </div>
               </div>
 
               <div class="form-group">
@@ -125,4 +134,4 @@
     </div>
   </div>
 
-<?php include_once('layouts/footer.php'); ?>
+<?php include_once ('layouts/footer.php'); ?>
