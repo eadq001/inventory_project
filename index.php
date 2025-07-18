@@ -1,8 +1,8 @@
 
 
 <?php
-  ob_start();
   require_once('includes/load.php');
+  ob_start();
   if($session->isUserLoggedIn(true)) { redirect('home.php', false);}
 ?>
 <!DOCTYPE html>

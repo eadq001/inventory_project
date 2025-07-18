@@ -55,8 +55,8 @@ if(isset($_POST['submit'])){
       <thead>
         <tr>
           <th>Quantity</th>
-          <th>Category</th>
-          <th>Product Name</th>
+          <th>Type of Merch</th>
+          <th>Item Description</th>
           <th>Sizes</th>
           <th>Selling Price</th>
           <th>Total</th>
@@ -76,6 +76,21 @@ if(isset($_POST['submit'])){
         </tr>
         <?php endforeach; ?>
       </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="5" class="text-right"><strong>Grand Total</strong></td>
+          <td class="text-right">
+            <?php 
+              $grand_total = 0;
+              foreach($results as $row) {
+                $grand_total += (float)$row['total'];
+              }
+              echo '&#8369; ' . number_format($grand_total, 2);
+            ?>
+          </td>
+          <td></td>
+        </tr>
+      </tfoot>
     </table>
   </div>
 <?php else:
