@@ -43,8 +43,10 @@ $results = '';
       }
     }
     .page-break{
-      width: 980px;
-      margin: 0 auto;
+      padding: 0 5rem;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
     }
      .sale-head{
        margin: 40px 0;
@@ -90,13 +92,13 @@ $results = '';
               <th>Sizes</th>
               <th>Quantity</th>
               <th>Price</th>
-              <th>Total</th>
-              <th>Date</th>
+              <th>Sell Date</th>
               <th>Product Added</th>
               <th>Date Purchased</th>
               <th>Supplier</th>
               <th>OR Number</th>
               <th>Remark</th>
+              <th>Total</th>
           </tr>
         </thead>
         <tbody>
@@ -106,7 +108,6 @@ $results = '';
               <td><?php echo remove_junk($result['categories'] ?? $result['category'] ?? ''); ?></td>
               <td><?php echo remove_junk($result['sizes'] ?? ''); ?></td>
               <td class="text-right"><?php echo remove_junk($result['qty'] ?? $result['total_sales'] ?? ''); ?></td>
-              <td class="text-right"><?php echo remove_junk(($result['price'] ?? $result['sale_price'] ?? 0) * ($result['qty'] ?? $result['total_sales'] ?? 0)); ?></td>
               <td class="text-right"><?php echo remove_junk($result['price'] ?? $result['sale_price'] ?? ''); ?></td>
               <td class="text-right"><?php echo remove_junk($result['date']);?></td>
               <td class="text-right"><?php echo remove_junk($result['product_added'] ?? ''); ?></td>
@@ -114,22 +115,27 @@ $results = '';
               <td class="text-right"><?php echo remove_junk($result['supplier'] ?? ''); ?></td>
               <td class="text-right"><?php echo remove_junk($result['or_number'] ?? ''); ?></td>
               <td class="text-right"><?php echo remove_junk($result['remarks'] ?? ''); ?></td>
+              <td class="text-right"><?php echo remove_junk(($result['price'] ?? $result['sale_price'] ?? 0) * ($result['qty'] ?? $result['total_sales'] ?? 0)); ?></td>
           </tr>
         <?php endforeach; ?>
         </tbody>
         <tfoot>
          <tr class="text-right">
-           <td colspan="4"></td>
+           <td colspan="10"></td>
            <td colspan="1">Grand Total</td>
            <td> &#8369;
-           <?php echo number_format(total_price($results)[0], 2);?>
+          <?php
+            $grand_total = 0;
+            foreach ($results as $result) {
+                $qty = $result['qty'] ?? $result['total_sales'] ?? 0;
+                $price = $result['price'] ?? $result['sale_price'] ?? 0;
+                $grand_total += $qty * $price;
+            }
+            echo number_format($grand_total, 2);
+          ?>
           </td>
          </tr>
-         <tr class="text-right">
-           <td colspan="4"></td>
-           <td colspan="1">Profit</td>
-           <td> &#8369; <?php echo number_format(total_price($results)[1], 2);?></td>
-         </tr>
+         
         </tfoot>
       </table>
     </div>

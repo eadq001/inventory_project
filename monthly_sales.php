@@ -1,26 +1,14 @@
 <?php
-$page_title = 'Daily Sales';
+$page_title = 'Monthly Sales';
 require_once('includes/load.php');
 page_require_level(3);
 
 // Get current month and year
 $year = date('Y');
 $month = date('m');
-
-// Ensure database connection is established
-if (!isset($db)) {
-  global $db;
-  require_once('includes/load.php');
-}
-
-// Query sales for the current month (use DATE_FORMAT for robust matching)
-$sql = "SELECT s.*, p.name, p.categorie_id, c.name AS category FROM sales s LEFT JOIN products p ON s.product_id = p.id LEFT JOIN categories c ON p.categorie_id = c.id WHERE DATE_FORMAT(s.date, '%Y-%m') = '{$year}-{$month}' ORDER BY s.date DESC";
+// Query sales for the current month (date stored as mm-dd-yyyy, so extract month and year from string)
+$sql = "SELECT s.*, p.name FROM sales s LEFT JOIN products p ON s.product_id = p.id WHERE SUBSTRING_INDEX(SUBSTRING_INDEX(s.date, ' ', 1), '-', 1) = '{$month}' AND SUBSTRING_INDEX(SUBSTRING_INDEX(s.date, ' ', 1), '-', -1) = '{$year}' ORDER BY STR_TO_DATE(s.date, '%m-%d-%Y') DESC";
 $sales = find_by_sql($sql);
-
-// If $sales is false or not an array, set it to an empty array to avoid errors in foreach
-if (!$sales || !is_array($sales)) {
-  $sales = [];
-}
 ?>
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
@@ -29,7 +17,7 @@ if (!$sales || !is_array($sales)) {
       <div class="panel-heading clearfix">
         <strong>
           <span class="glyphicon glyphicon-th"></span>
-          <span>Monthly Sales</span>
+          <span>MONTHLY SALES</span>
         </strong>
       </div>
       <div class="panel-body">
