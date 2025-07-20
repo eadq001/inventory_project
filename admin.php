@@ -92,6 +92,7 @@
           <thead>
            <tr>
              <th>Item Description</th>
+             <th>Type of Merch</th>
              <th>Total Sold</th>
              <th>Total Quantity</th>
            <tr>
@@ -100,10 +101,33 @@
             <?php foreach ($products_sold as  $product_sold): ?>
               <tr>
                 <td><?php echo remove_junk(first_character($product_sold['name'])); ?></td>
+                <td><?php echo $product_sold['category']; ?></td>
                 <td><?php echo (int)$product_sold['totalSold']; ?></td>
                 <td><?php echo (int)$product_sold['totalQty']; ?></td>
               </tr>
             <?php endforeach; ?>
+            <tr>
+              <td><strong>Grand Total</strong></td>
+              <td></td>
+              <td>
+                <strong>
+                  <?php
+                    $totalSold = 0;
+                    $totalQty = 0;
+                    foreach ($products_sold as $product_sold) {
+                      $totalSold += (int)$product_sold['totalSold'];
+                      $totalQty += (int)$product_sold['totalQty'];
+                    }
+                    echo $totalSold;
+                  ?>
+                </strong>
+              </td>
+              <td>
+                <strong>
+                  <?php echo $totalQty; ?>
+                </strong>
+              </td>
+            </tr>
           <tbody>
          </table>
        </div>
@@ -123,6 +147,7 @@
          <tr>
            <th class="text-center" style="width: 50px;">#</th>
            <th>Item Description</th>
+            <th>Type of Merch</th>
            <th>Date</th>
            <th>Total Sale</th>
          </tr>
@@ -136,11 +161,29 @@
              <?php echo remove_junk(first_character($recent_sale['name'])); ?>
            </a>
            </td>
+           <td>
+            <?php echo remove_junk(ucfirst($recent_sale['category'])); ?>
+           </td>
            <td><?php echo remove_junk(ucfirst($recent_sale['date'])); ?></td>
            <td>&#8369;<?php echo remove_junk(first_character($recent_sale['price'])); ?></td>
         </tr>
 
        <?php endforeach; ?>
+      <tr>
+        <td colspan="3" class="text-left"><strong>Total Sales:</strong></td>
+        <td td colspan="2">
+          <strong>
+            &#8369;
+            <?php
+              $total_price = 0;
+              foreach ($recent_sales as $recent_sale) {
+                $total_price += (float)$recent_sale['price'];
+              }
+              echo number_format($total_price, 2);
+            ?>
+          </strong>
+        </td>
+      </tr>
        </tbody>
      </table>
     </div>

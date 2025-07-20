@@ -12,31 +12,42 @@
    validate_fields($req_fields);
 
    if(empty($errors)){
-           $name   = remove_junk($db->escape($_POST['full-name']));
+       $name   = remove_junk($db->escape($_POST['full-name']));
        $username   = remove_junk($db->escape($_POST['username']));
        $password   = remove_junk($db->escape($_POST['password']));
        $user_level = (int)$db->escape($_POST['level']);
        $password = sha1($password);
-        $query = "INSERT INTO users (";
-        $query .="name,username,password,user_level,status";
-        $query .=") VALUES (";
-        $query .=" '{$name}', '{$username}', '{$password}', '{$user_level}','1'";
-        $query .=")";
-        if($db->query($query)){
-          //sucess
-          $session->msg('s',"User account has been created! ");
-          redirect('add_user.php', false);
-        } else {
-          //failed
-          $session->msg('d',' Sorry failed to create account!');
-          redirect('add_user.php', false);
-        }
+
+       // Check for duplicate username before inserting
+       $query_check = "SELECT id FROM users WHERE username = '{$username}' LIMIT 1";
+       $result_check = $db->query($query_check);
+       if($db->num_rows($result_check) > 0){
+         $session->msg('d','Username already exists. Please choose another.');
+         redirect('add_user.php', false);
+       } else {
+         $query = "INSERT INTO users (";
+         $query .="name,username,password,user_level,status";
+         $query .=") VALUES (";
+         $query .=" '{$name}', '{$username}', '{$password}', '{$user_level}','1'";
+         $query .=")";
+         if($db->query($query)){
+           //sucess
+           $session->msg('s',"User account has been created! ");
+           redirect('add_user.php', false);
+         } else {
+           //failed
+           $session->msg('d',' Sorry failed to create account!');
+           redirect('add_user.php', false);
+         }
+       }
    } else {
      $session->msg("d", $errors);
       redirect('add_user.php',false);
    }
  }
 ?>
+
+
 <?php include_once('layouts/header.php'); ?>
   <?php echo display_msg($msg); ?>
   <div class="row">

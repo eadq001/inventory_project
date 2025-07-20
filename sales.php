@@ -36,7 +36,7 @@ $sales = find_all_sale();
                 <th class="text-center" style="width: 10%;"> Quantity </th>
                 <th class="text-center" style="width: 10%;"> Total </th>
                 <th class="text-center" style="width: 10%;"> Price </th>
-                <th class="text-center" style="width: 10%;"> Date </th>
+                <th class="text-center" style="width: 10%;"> Sell Date </th>
                 <th class="text-center" style="width: 10%;"> Product Added </th>
                 <th class="text-center" style="width: 10%;"> Date Purchased </th>
                 <th class="text-center" style="width: 10%;"> Supplier</th>
@@ -53,9 +53,8 @@ $sales = find_all_sale();
                <td><?php echo remove_junk($sale['category']); ?></td>
                <td><?php echo remove_junk($sale['sizes']); ?></td>
                <td class="text-center"><?php echo (int)$sale['qty']; ?></td>
-               <td class="text-center"><?php echo remove_junk($sale['price'] * $sale['qty']); ?></td>
+                <td class="text-center"><?php echo number_format((float)($sale['price'] * $sale['qty']), 2, '.', ','); ?></td>
                <td class="text-center"><?php echo remove_junk( $sale['price'] ); ?></td>
-               <td class="text-center"><?php echo remove_junk($sale['date']); ?></td>
                <td class="text-center"><?php echo remove_junk($sale['date']); ?></td>
                <td class="text-center"><?php echo remove_junk($sale['product_added']); ?></td>
                <td class="text-center"><?php echo remove_junk($sale['date_purchased']); ?></td>

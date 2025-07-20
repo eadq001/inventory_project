@@ -274,21 +274,23 @@ function tableExists($table){
  /*--------------------------------------------------------------*/
  /* Function for Find Highest saleing Product
  /*--------------------------------------------------------------*/
- function find_higest_saleing_product($limit){
-   global $db;
-   $sql  = "SELECT p.name, COUNT(s.product_id) AS totalSold, SUM(s.qty) AS totalQty";
-   $sql .= " FROM sales s";
-   $sql .= " LEFT JOIN products p ON p.id = s.product_id ";
-   $sql .= " GROUP BY s.product_id";
-   $sql .= " ORDER BY SUM(s.qty) DESC LIMIT ".$db->escape((int)$limit);
-   return $db->query($sql);
- }
+function find_higest_saleing_product($limit){
+  global $db;
+  $sql  = "SELECT p.name, c.name AS category, COUNT(s.product_id) AS totalSold, SUM(s.qty) AS totalQty";
+  $sql .= " FROM sales s";
+  $sql .= " LEFT JOIN products p ON p.id = s.product_id";
+  $sql .= " LEFT JOIN categories c ON c.id = p.categorie_id";
+  $sql .= " GROUP BY s.product_id";
+  $sql .= " ORDER BY SUM(s.qty) DESC LIMIT ".$db->escape((int)$limit);
+  return $db->query($sql);
+}
+ 
  /*--------------------------------------------------------------*/
  /* Function for find all sales
  /*--------------------------------------------------------------*/
  function find_all_sale(){
    global $db;
-   $sql  = "SELECT s.id, s.category, s.sizes, s.qty, s.price, s.date, s.remarks, s.supplier, s.or_number, s.date_purchased, s.price, p.name ";
+   $sql  = "SELECT s.id, s.category, s.sizes, s.qty, s.price, s.date, s.remarks, s.date_purchased, s.product_added, s.supplier, s.or_number, p.name ";
    $sql .= "FROM sales s ";
    $sql .= "LEFT JOIN products p ON s.product_id = p.id ";
    $sql .= "ORDER BY s.date DESC";
@@ -299,9 +301,10 @@ function tableExists($table){
  /*--------------------------------------------------------------*/
 function find_recent_sale_added($limit){
   global $db;
-  $sql  = "SELECT s.id,s.qty,s.price,s.date,p.name";
+  $sql  = "SELECT s.id, s.qty, s.price, s.date, p.name, s.category, c.name AS category_name";
   $sql .= " FROM sales s";
   $sql .= " LEFT JOIN products p ON s.product_id = p.id";
+  $sql .= " LEFT JOIN categories c ON p.categorie_id = c.id";
   $sql .= " ORDER BY s.date DESC LIMIT ".$db->escape((int)$limit);
   return find_by_sql($sql);
 }
