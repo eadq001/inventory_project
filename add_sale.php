@@ -7,7 +7,7 @@
 <?php
 
   if(isset($_POST['add_sale'])){
-    $req_fields = array('s_id','category','sizes','quantity','price','total', 'date', 'remarks' );
+    $req_fields = array('s_id','category','sizes','quantity','price','total', 'date', 'remarks','date_purchased','product_added', 'supplier', 'or_number' );
     validate_fields($req_fields);
         if(empty($errors)){
           $p_id      = $db->escape((int)$_POST['s_id']);
@@ -15,14 +15,17 @@
           $s_categorie  = $db->escape($_POST['category']);
           $s_sizes  = $db->escape($_POST['sizes']);
           $s_total   = $db->escape($_POST['total']);
-          $date      = $db->escape($_POST['date']);
+          $s_date      = $db->escape($_POST['date']);
           $s_remarks      = $db->escape($_POST['remarks']);
-          $s_date    = make_date();
+          $s_date_purchased      = $db->escape($_POST['date_purchased']);
+          $s_product_added      = $db->escape($_POST['product_added']);
+          $s_supplier     = $db->escape($_POST['supplier']);
+          $s_or_number    = $db->escape($_POST['or_number']);
 
           $sql  = "INSERT INTO sales (";
-          $sql .= " product_id,category,sizes,qty,price,date,remarks";
+          $sql .= " product_id,category,sizes,qty,price,date,remarks,date_purchased,product_added,supplier,or_number";
           $sql .= ") VALUES (";
-          $sql .= "'{$p_id}','{$s_categorie}','{$s_sizes}','{$s_qty}','{$s_total}','{$s_date}','{$s_remarks}' ";
+          $sql .= "'{$p_id}','{$s_categorie}','{$s_sizes}','{$s_qty}','{$s_total}','{$s_date}','{$s_remarks}','{$s_date_purchased}','{$s_product_added}','{$s_supplier}','{$s_or_number}' ";
           $sql .= ")";
 
                 if($db->query($sql)){
@@ -77,7 +80,11 @@
             <th> Price </th>
             <th> Qty </th>
             <th> Total </th>
-            <th> Date</th>
+            <th> Product Added</th>
+            <th> Sell Date</th>
+            <th> Date Purchased</th>
+            <th> Supplier</th>
+            <th> OR Number</th>
             <th> Remarks</th>
             <th> Action</th>
            </thead>

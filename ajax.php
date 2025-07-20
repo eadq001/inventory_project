@@ -56,12 +56,27 @@ if (isset($_POST['p_name']) && strlen($_POST['p_name'])) {
       $html .= '<input type="text" class="form-control" name="quantity" value="1">';
       $html .= '</td>';
       $html .= '<td>';
-      $html .= "<input type=\"text\" class=\"form-control\" name=\"total\" value=\"{$result['sale_price']}\">";
+      $html .= "<input type=\"text\" class=\"form-control\" name=\"total\" value=\"{$result['sale_price']}\" readonly>";
+      $html .= '</td>';
+
+
+      $html .= '<td>';
+      // Format date as 'July 20, 2025 5:14 pm'
+      $formatted_datetime = '';
+      if (!empty($result['date'])) {
+        $timestamp = strtotime($result['date']);
+        $formatted_datetime = date('F j, Y g:i a', $timestamp);
+      }
+      $html .= '<input type="text" name="product_added" class="form-control" style="background-color:#e9ecef; cursor:not-allowed;" value="'. htmlspecialchars($formatted_datetime) .'">'  ;
       $html .= '</td>';
       $html .= '<td>';
-      $html .= '<input type="date" class="form-control datePicker" name="date" data-date data-date-format="yyyy-mm-dd">';
+      
+      // Format date as 'mm-dd-yyyy h:i am/pm'
+      // Display the exact date and time when the 'find it' button is clicked in Hong Kong timezone
+      $dt = new DateTime('now', new DateTimeZone('Asia/Hong_Kong'));
+      $current_datetime = $dt->format('m-d-Y g:i a');
+      $html .= '<input type="text" class="form-control" name="date" style="cursor:not-allowed;" value="' . htmlspecialchars($current_datetime) . '" readonly>';
       $html .= '</td>';
-        // Fetch remarks value by ID
       $remarks_value = '';
       if (!empty($result['categorie_id'])) {
         $remarks = find_by_id('products', $result['id']);
@@ -69,9 +84,35 @@ if (isset($_POST['p_name']) && strlen($_POST['p_name'])) {
           $remarks_value = $remarks['remarks'];
         }
       }
+      
+
+       
+      // Fetch or_number, date_purchased, and supplier from the product table
+      $or_value = isset($result['or_number']) ? htmlspecialchars($result['or_number']) : '';
+      $date_value = isset($result['date_purchased']) ? htmlspecialchars($result['date_purchased']) : '';
+      $supplier_value = isset($result['supplier']) ? htmlspecialchars($result['supplier']) : '';
+
+      $html .= '<td>';
+      // Format date_purchased as 'mm-dd-yyyy'
+      $formatted_date_purchased = '';
+      if (!empty($date_value)) {
+        $timestamp = strtotime($date_value);
+        $formatted_date_purchased = date('m-d-Y', $timestamp);
+      }
+      $html .= "<input type=\"text\" class=\"form-control\" name=\"date_purchased\" value=\"{$formatted_date_purchased}\" readonly style=\"background-color:#e9ecef; cursor:not-allowed;\">";
+      $html .= '</td>';
+      $html .= '<td>';
+      $html .= "<input type=\"text\" class=\"form-control\" name=\"supplier\" value=\"{$supplier_value}\" readonly>";
+      $html .= '</td>';
+
+      $html .= '<td>';
+      $html .= "<input type=\"text\" class=\"form-control\" name=\"or_number\" value=\"{$or_value}\" readonly>";
+      $html .= '</td>';
+
        $html .= '<td>';
       $html .= "<input type=\"text\" class=\"form-control\" name=\"remarks\" value=\"{$remarks_value}\"readonly>";
       $html .= '</td>';
+
       $html .= '<td>';
       $html .= '<button type="submit" name="add_sale" class="btn btn-primary">Add sale</button>';
       $html .= '</td>';

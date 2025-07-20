@@ -29,14 +29,19 @@ $sales = find_all_sale();
           <table class="table table-bordered table-striped">
             <thead>
               <tr>
-                <th class="text-center" style="width: 50px;">#</th>
+                 <th class="text-center" style="width: 50px;">#</th>
                 <th> Item Description </th>
-                <th> Type of Merch </th>
-                <th> Sizes </th>
-                <th class="text-center" style="width: 15%;"> Quantity</th>
-                <th class="text-center" style="width: 15%;"> Total </th>
-                <th class="text-center" style="width: 15%;"> Date </th>
-                <th class="text-center" style="width: 15%;"> Remarks </th>
+                <th class="text-center" style="width: 10%;"> Type of Merch </th>
+                <th class="text-center" style="width: 10%;"> Sizes </th>
+                <th class="text-center" style="width: 10%;"> Quantity </th>
+                <th class="text-center" style="width: 10%;"> Total </th>
+                <th class="text-center" style="width: 10%;"> Price </th>
+                <th class="text-center" style="width: 10%;"> Date </th>
+                <th class="text-center" style="width: 10%;"> Product Added </th>
+                <th class="text-center" style="width: 10%;"> Date Purchased </th>
+                <th class="text-center" style="width: 10%;"> Supplier</th>
+                <th class="text-center" style="width: 10%;"> OR Number</th>
+                <th class="text-center" style="width: 10%;"> Remarks </th>
                 <th class="text-center" style="width: 100px;"> Actions </th>
              </tr>
             </thead>
@@ -48,8 +53,14 @@ $sales = find_all_sale();
                <td><?php echo remove_junk($sale['category']); ?></td>
                <td><?php echo remove_junk($sale['sizes']); ?></td>
                <td class="text-center"><?php echo (int)$sale['qty']; ?></td>
-               <td class="text-center"><?php echo remove_junk($sale['price']); ?></td>
-               <td class="text-center"><?php echo $sale['date']; ?></td>
+               <td class="text-center"><?php echo remove_junk($sale['price'] * $sale['qty']); ?></td>
+               <td class="text-center"><?php echo remove_junk( $sale['price'] ); ?></td>
+               <td class="text-center"><?php echo remove_junk($sale['date']); ?></td>
+               <td class="text-center"><?php echo remove_junk($sale['date']); ?></td>
+               <td class="text-center"><?php echo remove_junk($sale['product_added']); ?></td>
+               <td class="text-center"><?php echo remove_junk($sale['date_purchased']); ?></td>
+               <td class="text-center"><?php echo remove_junk($sale['supplier']); ?></td>
+               <td class="text-center"><?php echo remove_junk($sale['or_number']); ?></td>
                <td class="text-center"><?php echo $sale['remarks']; ?></td>
                <td class="text-center">
                   <div class="btn-group">
