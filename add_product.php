@@ -8,7 +8,7 @@ $all_photo = find_all('media');
 ?>
 <?php
 if (isset($_POST['add_product'])) {
-  $req_fields = array('product-title', 'product-categorie', 'remarks','sizes', 'product-quantity', 'buying-price', 'selling-price');
+  $req_fields = array('product-title', 'product-categorie', 'remarks', 'sizes', 'product-quantity', 'buying-price', 'selling-price');
   validate_fields($req_fields);
   if (empty($errors)) {
     $p_name = remove_junk($db->escape($_POST['product-title']));
@@ -18,11 +18,15 @@ if (isset($_POST['add_product'])) {
     $p_sale = remove_junk($db->escape($_POST['selling-price']));
     $p_remarks = remove_junk($db->escape($_POST['remarks']));
     $p_sizes = remove_junk($db->escape($_POST['sizes']));
+    $p_supplier = remove_junk($db->escape($_POST['supplier']));
+    $p_orNumber = remove_junk($db->escape($_POST['or_number']));
+    $p_datePurchased = remove_junk($db->escape($_POST['date_purchased']));
+    $p_unit = remove_junk($db->escape($_POST['unit']));
     $date = make_date();
     $query = 'INSERT INTO products (';
-    $query .= ' name,quantity,buy_price,sale_price,categorie_id,remarks,sizes, date';
+    $query .= ' name,quantity,buy_price,sale_price,categorie_id,remarks,sizes, date,supplier, or_number, date_purchased,unit';
     $query .= ') VALUES (';
-    $query .= " '{$p_name}', '{$p_qty}', '{$p_buy}', '{$p_sale}', '{$p_cat}', '{$p_remarks}','{$p_sizes}', '{$date}'";
+    $query .= " '{$p_name}', '{$p_qty}', '{$p_buy}', '{$p_sale}', '{$p_cat}', '{$p_remarks}','{$p_sizes}', '{$date}', '{$p_supplier}', '{$p_orNumber}', '{$p_datePurchased}', '{$p_unit}'";
     $query .= ')';
     $query .= " ON DUPLICATE KEY UPDATE name='{$p_name}'";
     if ($db->query($query)) {
@@ -77,22 +81,61 @@ if (isset($_POST['add_product'])) {
                           <?php endforeach; ?>
                         </select>
                         <div class="form-group" style="margin-top:15px;">
-                          <div class="input-group">
-                            <span class="input-group-addon">
-                             <i class="glyphicon glyphicon-th-large"></i>
-                            </span>
+                         
+                          
                             <input type="text" class="form-control" name="sizes" placeholder="Sizes">
-                         </div>
+                        </div>
+                        <div class="form-group" style="margin-top:15px;">
+                         
+                          
+                            <input type="text" class="form-control" name="supplier" placeholder="Supplier">
+                        </div>
+                          <div class="form-group">
+                         
+                            <label for="date">Date Purchased</label>
+                            <input type="date" class="form-control" name="date_purchased" >
                         </div>
                       </div>
-                <div class="form-group">
-                <div class="input-group">
-                  <span class="input-group-addon">
-                   <i class="glyphicon glyphicon-th-large"></i>
-                  </span>
-                  <input type="text" class="form-control" name="remarks" placeholder="Remarks">
-               </div>
-                </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-6">
+                    <select class="form-control" name="remarks">
+                        <option value="">-- Remarks --</option>
+                        <option value="New">New</option>
+                        <option value="Old">Old</option>
+                        </select>
+                        <div class="form-group" style="margin-top:15px;">
+                         
+                          
+                            <input type="text" class="form-control" name="or_number" placeholder="OR number">
+                        </div>
+                        <div class="form-group" style="margin-top:15px;">
+                         
+                          
+                            <select class="form-control" name="unit">
+                        <option value="Pieces">Pieces</option>
+                        </select>
+                        </div>
+                      
+                      </div>
+                        </div>
+                      </div>
+                      
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               </div>
               </div>
 
