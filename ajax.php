@@ -78,7 +78,7 @@ if (isset($_POST['p_name']) && strlen($_POST['p_name'])) {
       $html .= '</tr>';
     }
   } else {
-    $html = '<tr><td>product name not resgister in database</td></tr>';
+    $html = '<tr><td>product name not register in database</td></tr>';
   }
 
   echo json_encode($html);

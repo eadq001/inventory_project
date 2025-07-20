@@ -29,6 +29,9 @@
                 <th class="text-center" style="width: 10%;"> Buying Price </th>
                 <th class="text-center" style="width: 10%;"> Selling Price </th>
                 <th class="text-center" style="width: 10%;"> Product Added </th>
+                <th class="text-center" style="width: 10%;"> Date Purchased </th>
+                <th class="text-center" style="width: 10%;"> Supplier</th>
+                <th class="text-center" style="width: 10%;"> OR Number</th>
                 <th class="text-center" style="width: 10%;"> Remarks </th>
                 <th class="text-center" style="width: 100px;"> Actions </th>
               </tr>
@@ -45,7 +48,11 @@
                 <td class="text-center"> <?php echo remove_junk($product['buy_price']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['sale_price']); ?></td>
                 <td class="text-center"> <?php echo read_date($product['date']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['remarks']); ?></td>
+                <td class="text-center"> <?php echo isset($product['date_purchased']) ? read_date($product['date_purchased']) : ''; ?></td>
+               
+                <td class="text-center"> <?php echo remove_junk($product['supplier']); ?></td>
+                <td class="text-center"> <?php echo remove_junk($product['or_number']); ?></td></td>
+                <td class="text-center"> <?php echo remove_junk($product['remarks']); ?></td></td>
                 <td class="text-center">
                   <div class="btn-group">
                     <a href="edit_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-info btn-xs"  title="Edit" data-toggle="tooltip">
