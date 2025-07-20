@@ -57,9 +57,31 @@
                 <a href="edit_user.php?id=<?php echo (int)$a_user['id'];?>" class="btn btn-xs btn-warning" data-toggle="tooltip" title="Edit">
                   <i class="glyphicon glyphicon-pencil"></i>
                </a>
-                <a href="delete_user.php?id=<?php echo (int)$a_user['id'];?>" class="btn btn-xs btn-danger" data-toggle="tooltip" title="Remove">
+                <!-- Delete Button triggers modal -->
+                <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#deleteUserModal<?php echo (int)$a_user['id'];?>" title="Remove">
                   <i class="glyphicon glyphicon-remove"></i>
-                </a>
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="deleteUserModal<?php echo (int)$a_user['id'];?>" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel<?php echo (int)$a_user['id'];?>" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                    <h4 class="modal-title" id="deleteUserModalLabel<?php echo (int)$a_user['id'];?>">Confirm Delete</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                    Are you sure you want to delete user <strong><?php echo remove_junk(ucwords($a_user['name']))?></strong>?
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <a href="delete_user.php?id=<?php echo (int)$a_user['id'];?>" class="btn btn-danger">Delete</a>
+                    </div>
+                  </div>
+                  </div>
+                </div>
                 </div>
            </td>
           </tr>

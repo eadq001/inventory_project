@@ -23,9 +23,14 @@ body {
 
 
 .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
   text-align: center;
   background: rgba(255, 255, 255, 0.1);
-  padding: 40px;
+  padding: 0 30px;
   border-radius: 15px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
@@ -38,6 +43,7 @@ body {
 }
 
 h1 {
+  font-size: 22px;
   color: #023d17;
   margin-bottom: 30px;
 }
@@ -87,6 +93,7 @@ h1 {
 }
 
 .login-page input {
+    width: 300px !important;
     padding: 8px 9px;
     border: none;
     border-radius: 6px;
