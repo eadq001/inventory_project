@@ -10,7 +10,7 @@ if(isset($_POST['submit'])){
     $start_date = remove_junk($db->escape($_POST['start-date']));
     $end_date = remove_junk($db->escape($_POST['end-date']));
     // Query for inventory report: get all products added/updated between the dates
-    $sql = "SELECT p.quantity, c.name AS category, p.name, p.sizes, p.sale_price, (p.quantity * p.sale_price) AS total, p.remarks, p.date FROM products p LEFT JOIN categories c ON c.id = p.categorie_id WHERE DATE(p.date) BETWEEN '{$start_date}' AND '{$end_date}' ORDER BY p.date DESC";
+    $sql = "SELECT p.quantity, p.unit, c.name AS category, p.name, p.sizes, p.sale_price, (p.quantity * p.sale_price) AS total, p.remarks, p.date FROM products p LEFT JOIN categories c ON c.id = p.categorie_id WHERE DATE(p.date) BETWEEN '{$start_date}' AND '{$end_date}' ORDER BY p.date DESC";
     $results = find_by_sql($sql);
   } else {
     $session->msg("d", $errors);
@@ -55,6 +55,7 @@ if(isset($_POST['submit'])){
       <thead>
         <tr>
           <th>Quantity</th>
+          <th>Unit</th>
           <th>Type of Merch</th>
           <th>Item Description</th>
           <th>Sizes</th>
@@ -67,6 +68,7 @@ if(isset($_POST['submit'])){
         <?php foreach($results as $row): ?>
         <tr>
           <td class="text-center"><?php echo remove_junk($row['quantity']);?></td>
+          <td class="text-center"><?php echo isset($row['unit']) ? remove_junk($row['unit']) : ''; ?></td>
           <td><?php echo remove_junk($row['category']);?></td>
           <td><?php echo remove_junk($row['name']);?></td>
           <td><?php echo remove_junk($row['sizes']);?></td>
@@ -78,8 +80,8 @@ if(isset($_POST['submit'])){
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="5" class="text-right"><strong>Grand Total</strong></td>
-          <td class="text-right">
+          <td colspan="6" class="text-right"><strong>Grand Total</strong></td>
+          <td class="text-left" colspan="2">
             <?php 
               $grand_total = 0;
               foreach($results as $row) {
@@ -88,7 +90,6 @@ if(isset($_POST['submit'])){
               echo '&#8369; ' . number_format($grand_total, 2);
             ?>
           </td>
-          <td></td>
         </tr>
       </tfoot>
     </table>

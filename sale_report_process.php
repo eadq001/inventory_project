@@ -85,25 +85,35 @@ $results = '';
       <table class="table table-border">
         <thead>
           <tr>
+              <th>Name</th>
+              <th>Categories</th>
+              <th>Sizes</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Total</th>
               <th>Date</th>
-              <th>Product Title</th>
-              <th>Buying Price</th>
-              <th>Selling Price</th>
-              <th>Total Qty</th>
-              <th>TOTAL</th>
+              <th>Product Added</th>
+              <th>Date Purchased</th>
+              <th>Supplier</th>
+              <th>OR Number</th>
+              <th>Remark</th>
           </tr>
         </thead>
         <tbody>
           <?php foreach($results as $result): ?>
            <tr>
-              <td class=""><?php echo remove_junk($result['date']);?></td>
-              <td class="desc">
-                <h6><?php echo remove_junk(ucfirst($result['name']));?></h6>
-              </td>
-              <td class="text-right"><?php echo remove_junk($result['buy_price']);?></td>
-              <td class="text-right"><?php echo remove_junk($result['sale_price']);?></td>
-              <td class="text-right"><?php echo remove_junk($result['total_sales']);?></td>
-              <td class="text-right"><?php echo remove_junk($result['total_saleing_price']);?></td>
+              <td><?php echo remove_junk($result['name']);?></td>
+              <td><?php echo remove_junk($result['categories'] ?? $result['category'] ?? ''); ?></td>
+              <td><?php echo remove_junk($result['sizes'] ?? ''); ?></td>
+              <td class="text-right"><?php echo remove_junk($result['qty'] ?? $result['total_sales'] ?? ''); ?></td>
+              <td class="text-right"><?php echo remove_junk(($result['price'] ?? $result['sale_price'] ?? 0) * ($result['qty'] ?? $result['total_sales'] ?? 0)); ?></td>
+              <td class="text-right"><?php echo remove_junk($result['price'] ?? $result['sale_price'] ?? ''); ?></td>
+              <td class="text-right"><?php echo remove_junk($result['date']);?></td>
+              <td class="text-right"><?php echo remove_junk($result['product_added'] ?? ''); ?></td>
+              <td class="text-right"><?php echo remove_junk($result['date_purchased'] ?? ''); ?></td>
+              <td class="text-right"><?php echo remove_junk($result['supplier'] ?? ''); ?></td>
+              <td class="text-right"><?php echo remove_junk($result['or_number'] ?? ''); ?></td>
+              <td class="text-right"><?php echo remove_junk($result['remarks'] ?? ''); ?></td>
           </tr>
         <?php endforeach; ?>
         </tbody>

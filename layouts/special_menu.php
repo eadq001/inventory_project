@@ -8,7 +8,7 @@
   <li>
     <a href="categorie.php" >
       <i class="glyphicon glyphicon-indent-left"></i>
-      <span>Categories</span>
+      <span>Type of Merch</span>
     </a>
   </li>
   <li>

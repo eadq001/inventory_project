@@ -9,37 +9,47 @@
   if(isset($_POST['add_sale'])){
     $req_fields = array('s_id','category','sizes','quantity','price','total', 'date', 'remarks','date_purchased','product_added', 'supplier', 'or_number' );
     validate_fields($req_fields);
-        if(empty($errors)){
-          $p_id      = $db->escape((int)$_POST['s_id']);
-          $s_qty     = $db->escape((int)$_POST['quantity']);
-          $s_categorie  = $db->escape($_POST['category']);
-          $s_sizes  = $db->escape($_POST['sizes']);
-          $s_total   = $db->escape($_POST['total']);
-          $s_date      = $db->escape($_POST['date']);
-          $s_remarks      = $db->escape($_POST['remarks']);
-          $s_date_purchased      = $db->escape($_POST['date_purchased']);
-          $s_product_added      = $db->escape($_POST['product_added']);
-          $s_supplier     = $db->escape($_POST['supplier']);
-          $s_or_number    = $db->escape($_POST['or_number']);
+    if(empty($errors)){
+      $p_id      = $db->escape((int)$_POST['s_id']);
+      $s_qty     = $db->escape((int)$_POST['quantity']);
+      // Check product stock before proceeding
+      $product = find_by_id('products', $p_id);
+      if(!$product) {
+        $session->msg('d','Product not found!');
+        redirect('add_sale.php', false);
+      }
+      if($s_qty > $product['quantity']) {
+        $session->msg('d','Not enough stock! Only ' . $product['quantity'] . ' left.');
+        redirect('add_sale.php', false);
+      }
+      $s_categorie  = $db->escape($_POST['category']);
+      $s_sizes  = $db->escape($_POST['sizes']);
+      $s_total   = $db->escape($_POST['total']);
+      $s_date      = $db->escape($_POST['date']);
+      $s_remarks      = $db->escape($_POST['remarks']);
+      $s_date_purchased      = $db->escape($_POST['date_purchased']);
+      $s_product_added      = $db->escape($_POST['product_added']);
+      $s_supplier     = $db->escape($_POST['supplier']);
+      $s_or_number    = $db->escape($_POST['or_number']);
 
-          $sql  = "INSERT INTO sales (";
-          $sql .= " product_id,category,sizes,qty,price,date,remarks,date_purchased,product_added,supplier,or_number";
-          $sql .= ") VALUES (";
-          $sql .= "'{$p_id}','{$s_categorie}','{$s_sizes}','{$s_qty}','{$s_total}','{$s_date}','{$s_remarks}','{$s_date_purchased}','{$s_product_added}','{$s_supplier}','{$s_or_number}' ";
-          $sql .= ")";
+      $sql  = "INSERT INTO sales (";
+      $sql .= " product_id,category,sizes,qty,price,date,remarks,date_purchased,product_added,supplier,or_number";
+      $sql .= ") VALUES (";
+      $sql .= "'{$p_id}','{$s_categorie}','{$s_sizes}','{$s_qty}','{$s_total}','{$s_date}','{$s_remarks}','{$s_date_purchased}','{$s_product_added}','{$s_supplier}','{$s_or_number}' ";
+      $sql .= ")";
 
-                if($db->query($sql)){
-                  update_product_qty($s_qty,$p_id);
-                  $session->msg('s',"Sale added. ");
-                  redirect('add_sale.php', false);
-                } else {
-                  $session->msg('d',' Sorry failed to add!');
-                  redirect('add_sale.php', false);
-                }
-        } else {
-           $session->msg("d", $errors);
-           redirect('add_sale.php',false);
-        }
+            if($db->query($sql)){
+              update_product_qty($s_qty,$p_id);
+              $session->msg('s',"Sale added. ");
+              redirect('add_sale.php', false);
+            } else {
+              $session->msg('d',' Sorry failed to add!');
+              redirect('add_sale.php', false);
+            }
+    } else {
+       $session->msg("d", $errors);
+       redirect('add_sale.php',false);
+    }
   }
 
 ?>
