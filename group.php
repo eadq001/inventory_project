@@ -52,9 +52,34 @@
                 <a href="edit_group.php?id=<?php echo (int)$a_group['id'];?>" class="btn btn-xs btn-warning" data-toggle="tooltip" title="Edit">
                   <i class="glyphicon glyphicon-pencil"></i>
                </a>
-                <a href="delete_group.php?id=<?php echo (int)$a_group['id'];?>" class="btn btn-xs btn-danger" data-toggle="tooltip" title="Remove">
-                  <i class="glyphicon glyphicon-remove"></i>
-                </a>
+                <!-- Delete Button triggers modal -->
+                 
+                <?php if(strtolower($a_group['group_name']) !== 'admin'): ?>
+                  <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#deleteModal<?php echo (int)$a_group['id'];?>" title="Remove">
+                    <i class="glyphicon glyphicon-remove"></i>
+                  </button>
+                <?php endif; ?>
+
+                <!-- Modal -->
+                <div class="modal fade" id="deleteModal<?php echo (int)$a_group['id'];?>" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel<?php echo (int)$a_group['id'];?>" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title" id="deleteModalLabel<?php echo (int)$a_group['id'];?>">Confirm Delete</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        Are you sure you want to delete this group?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <a href="delete_group.php?id=<?php echo (int)$a_group['id'];?>" class="btn btn-danger">Delete</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 </div>
            </td>
           </tr>

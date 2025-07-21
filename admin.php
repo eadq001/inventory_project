@@ -202,7 +202,7 @@
         <div class="list-group">
       <?php foreach ($recent_products as  $recent_product): ?>
             <a class="list-group-item clearfix" href="edit_product.php?id=<?php echo    (int)$recent_product['id'];?>">
-                <h4 class="list-group-item-heading">
+                <h4 class="list-group-item-heading" style="font-size:16px;">
                 <?php echo remove_junk(first_character($recent_product['name']));?>
                   <span class="label label-warning pull-right">
                  &#8369;<?php echo (int)$recent_product['sale_price']; ?>
