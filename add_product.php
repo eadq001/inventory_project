@@ -23,12 +23,19 @@ if (isset($_POST['add_product'])) {
     $p_datePurchased = remove_junk($db->escape($_POST['date_purchased']));
     $p_unit = remove_junk($db->escape($_POST['unit']));
     $date = make_date();
+    // Check for duplicate product with same name, category, sizes, and remarks
+    $dup_check_sql = "SELECT id FROM products WHERE name='{$p_name}' AND categorie_id='{$p_cat}' AND sizes='{$p_sizes}' AND remarks='{$p_remarks}' LIMIT 1";
+    $dup_result = $db->query($dup_check_sql);
+    if ($db->num_rows($dup_result) > 0) {
+      $session->msg('d', 'Product already exists with the same name, category, sizes, and remarks!');
+      redirect('add_product.php', false);
+    }
+    // Remove ON DUPLICATE KEY UPDATE to allow multiple products with same name but different category, sizes, or remarks
     $query = 'INSERT INTO products (';
     $query .= ' name,quantity,buy_price,sale_price,categorie_id,remarks,sizes, date,supplier, or_number, date_purchased,unit';
     $query .= ') VALUES (';
     $query .= " '{$p_name}', '{$p_qty}', '{$p_buy}', '{$p_sale}', '{$p_cat}', '{$p_remarks}','{$p_sizes}', '{$date}', '{$p_supplier}', '{$p_orNumber}', '{$p_datePurchased}', '{$p_unit}'";
     $query .= ')';
-    $query .= " ON DUPLICATE KEY UPDATE name='{$p_name}'";
     if ($db->query($query)) {
       $session->msg('s', 'Product added ');
       redirect('add_product.php', false);
