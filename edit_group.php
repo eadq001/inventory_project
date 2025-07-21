@@ -53,7 +53,18 @@
         </div>
         <div class="form-group">
               <label for="level" class="control-label">Group Level</label>
-              <input type="number" class="form-control" name="group-level" value="<?php echo (int)$e_group['group_level']; ?>">
+                <select class="form-control" name="group-level">
+                <option value="<?php echo (int)$e_group['group_level']; ?>" selected>
+                  <?php echo (int)$e_group['group_level']; ?>
+                </option>
+                <?php
+                  // Optionally, show other levels (1-10) except the current one
+                  for ($i = 1; $i <= 3; $i++) {
+                  if ($i == (int)$e_group['group_level']) continue;
+                  echo "<option value=\"{$i}\">{$i}</option>";
+                  }
+                ?>
+                </select></select>
         </div>
         <div class="form-group">
           <label for="status">Status</label>
