@@ -1,0 +1,2 @@
+-- Remove unique constraint on 'name'
+ALTER TABLE products DROP INDEX name;
