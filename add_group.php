@@ -13,7 +13,7 @@
    if(find_by_groupName($_POST['group-name']) === false ){
      $session->msg('d','<b>Sorry!</b> Entered Group Name already in database!');
      redirect('add_group.php', false);
-   }elseif(find_by_groupLevel($_POST['group-level']) === false) {
+   }elseif(find_by_groupLevel($_POST['group-level']) !== false) {
      $session->msg('d','<b>Sorry!</b> Entered Group Level already in database!');
      redirect('add_group.php', false);
    }
@@ -29,7 +29,7 @@
         $query .=")";
         if($db->query($query)){
           //sucess
-          $session->msg('s',"Group has been creted! ");
+          $session->msg('s',"Group has been created! ");
           redirect('add_group.php', false);
         } else {
           //failed
@@ -55,7 +55,12 @@
         </div>
         <div class="form-group">
               <label for="level" class="control-label">Group Level</label>
-              <input type="number" class="form-control" name="group-level">
+              <select class="form-control" name="group-level" required>
+            <option value="">Select Level</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+              </select>
         </div>
         <div class="form-group">
           <label for="status">Status</label>
@@ -65,7 +70,7 @@
             </select>
         </div>
         <div class="form-group clearfix">
-                <button type="submit" name="add" class="btn btn-info">Update</button>
+                <button type="submit" name="add" class="btn btn-info">Add</button>
         </div>
     </form>
 </div>

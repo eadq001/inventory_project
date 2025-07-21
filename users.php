@@ -58,9 +58,11 @@
                   <i class="glyphicon glyphicon-pencil"></i>
                </a>
                 <!-- Delete Button triggers modal -->
-                <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#deleteUserModal<?php echo (int)$a_user['id'];?>" title="Remove">
-                  <i class="glyphicon glyphicon-remove"></i>
-                </button>
+                <?php if(!($a_user['group_name'] === 'admin' && $a_user['id'] == $user['id']) && $a_user['id'] != $user['id']): ?>
+                  <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#deleteUserModal<?php echo (int)$a_user['id'];?>" title="Remove">
+                    <i class="glyphicon glyphicon-remove"></i>
+                  </button>
+                <?php endif; ?>
 
                 <!-- Modal -->
                 <div class="modal fade" id="deleteUserModal<?php echo (int)$a_user['id'];?>" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel<?php echo (int)$a_user['id'];?>" aria-hidden="true">
